@@ -1,0 +1,169 @@
+---
+title: User Authentication and Access Control
+description: Learn how to securely access the platform and manage user permissions for your team.
+---
+
+## Overview
+
+Secure authentication protects your patient management system at wartenmitadana GmbH. You access the dashboard to handle patient queues, staff assignments, and call notifications. All logins use HTTPS encryption, and sessions expire automatically for safety.
+
+<Callout kind="info">
+  Before logging in, ensure you have an active account. New users register at `https://app.example.com/register` with practice details verified by email.
+</Callout>
+
+## Login Methods
+
+Choose between web dashboard or mobile app for authentication. Both support email/password and optional two-factor authentication (2FA).
+
+<Tabs>
+  <Tab title="Web Dashboard" icon="monitor">
+    <Steps>
+      <Step title="Navigate" icon="globe">
+        Visit `https://dashboard.example.com/login`.
+      </Step>
+      <Step title="Enter Credentials" icon="user">
+        Input your email and password.
+      </Step>
+      <Step title="Verify 2FA" icon="shield">
+        Enter the code from your authenticator app if enabled.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Mobile App" icon="smartphone">
+    <Steps>
+      <Step title="Open App" icon="app-window">
+        Launch the wartenmitadana app from your app store.
+      </Step>
+      <Step title="Sign In" icon="log-in">
+        Tap "Login" and provide credentials.
+      </Step>
+      <Step title="Biometrics" icon="fingerprint">
+        Use Face ID or fingerprint if set up.
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Role-Based Access Control
+
+Roles define permissions for your team. Receptionists manage queues; administrators handle users and settings.
+
+<Columns cols={2}>
+  <Card title="Receptionist" icon="users" href="/roles/receptionist">
+    View and call patients, manage waiting lists.
+  </Card>
+  <Card title="Administrator" icon="settings" href="/roles/admin">
+    Full access: users, billing, system config.
+  </Card>
+</Columns>
+
+## Password Management and 2FA
+
+Reset passwords via "Forgot Password?" link. Enable 2FA in account settings for added security.
+
+<Steps>
+  <Step title="Enable 2FA" icon="shield">
+    Go to profile settings.
+  </Step>
+  <Step title="Scan QR Code" icon="camera">
+    Use your authenticator app to scan.
+  </Step>
+  <Step title="Save Backup Codes" icon="save">
+    Download and store securely.
+  </Step>
+</Steps>
+
+## API Authentication
+
+Integrate with your systems using token-based auth. First, generate an API token.
+
+<ParamField header="Authorization" param-type="string" required="true">
+  Bearer token: `Bearer YOUR_TOKEN`.
+</ParamField>
+
+<ParamField query="practice_id" param-type="string" required="true">
+  Your practice identifier.
+</ParamField>
+
+<Request tabs="cURL,JavaScript">
+  ```bash
+  curl -X POST https://api.example.com/v1/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "user@example.com",
+      "password": "securepass123"
+    }'
+  ```
+  ````javascript
+  const response = await fetch('https://api.example.com/v1/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: 'user@example.com',
+      password: 'securepass123'
+    })
+  });
+  const data = await response.json();
+  console.log(data.token);
+  ````
+</Request>
+
+<Response tabs="200,401">
+  ```json
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "expires_at": "2024-12-31T23:59:59Z"
+  }
+  ```
+
+  ```json
+  {
+    "error": "Invalid credentials"
+  }
+  ```
+</Response>
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+  const token = data.token;
+  fetch('https://api.example.com/v1/patients', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  ```
+  ```python
+  import requests
+  headers = {'Authorization': f'Bearer {token}'}
+  response = requests.get('https://api.example.com/v1/patients', headers=headers)
+  ```
+</CodeGroup>
+
+## Session Handling and Logout
+
+Sessions last 30 minutes of inactivity before auto-logout. Manually log out from the profile menu.
+
+<Callout kind="alert">
+  Always log out from shared devices. Never share credentials or tokens.
+</Callout>
+
+## Advanced Security
+
+<Expandable title="Troubleshoot Login Issues" default-open="false">
+
+Common issues include expired 2FA codes or IP restrictions.
+
+| Issue | Solution |
+|-------|----------|
+| Invalid credentials | Reset password via email link. |
+| 2FA mismatch | Sync your device time. |
+| Locked account | Contact support after 5 failed attempts. |
+
+</Expandable>
+
+<ExpandableGroup>
+  <Expandable title="Session Audit Logs" default-open="true">
+    Admins view logs at `https://dashboard.example.com/audit`.
+  </Expandable>
+  <Expandable title="Custom Permissions">
+    Fine-tune roles via admin panel.
+  </Expandable>
+</ExpandableGroup>

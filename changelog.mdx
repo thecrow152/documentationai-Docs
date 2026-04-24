@@ -1,0 +1,131 @@
+---
+title: Changelog
+description: Track the latest updates, new features, and improvements to the wartenmitadana system.
+---
+
+## Recent Updates
+
+Stay current with the latest enhancements to wartenmitadana, your discreet patient call system for medical practices. We release updates regularly to improve patient management, add sustainability features, and boost efficiency.
+
+<Columns cols={3}>
+  <Card title="v1.2.0" icon="zap" href="#v120">
+    Enhanced drag-and-drop patient management and new SMS notifications.
+  </Card>
+  <Card title="v1.1.0" icon="shield" href="#v110">
+    Improved security for self-check-in terminals and reusable cards.
+  </Card>
+  <Card title="v1.0.0" icon="rocket" href="#v100">
+    Initial release with core patient call functionality.
+  </Card>
+</Columns>
+
+<Update label="2024-10-15" description="v1.2.0" tags={["feature", "improvement"]}>
+
+## New Features
+
+- Added SMS and app-based patient notifications for contactless calls.
+- Introduced drag-and-drop interface for reordering patients on the waiting room TV.
+
+## Improvements
+
+- Optimized performance for high-volume practices (MVZ support up to `>50` patients).
+- Enhanced reusable card disinfection tracking.
+
+## Bug Fixes
+
+- Fixed occasional display lag on waiting room screens.
+- Resolved numbering conflicts in multi-terminal setups.
+
+</Update>
+
+<Update label="2024-09-20" description="v1.1.0" tags={["feature", "bugfix"]}>
+
+## New Features
+
+- Integrated self-check-in terminal compatibility with automatic number assignment.
+- Added customizable TV display themes for branding.
+
+## Bug Fixes
+
+- Corrected patient number reset issues after practice hours.
+- Patched minor UI glitches on tablet devices.
+
+## Improvements
+
+- Reduced energy consumption of display hardware by `20%`.
+
+</Update>
+
+<Update label="2024-08-10" description="v1.0.0" tags={["feature", "breaking"]}>
+
+## New Features
+
+- Core patient call system: Assign numbers via cards, print, or smartphone.
+- Waiting room TV integration for anonymous, efficient calls.
+- Basic admin dashboard at `https://app.wartenmitadana.de`.
+
+## Breaking Changes
+
+- Updated API endpoints to `https://api.wartenmitadana.de/v1`.
+
+## Initial Setup
+
+- First-time configuration wizard for practices.
+
+</Update>
+
+## How to Update
+
+Follow these steps to apply the latest version to your wartenmitadana setup.
+
+<Steps>
+  <Step title="Check Current Version" icon="info">
+    Log in to your dashboard at `https://app.wartenmitadana.de`.
+    
+    Navigate to **Settings > About** to view your installed version.
+  </Step>
+  <Step title="Download Update" icon="download">
+    <Tabs>
+      <Tab title="Web Dashboard" icon="monitor">
+        Click **Update Available** banner and follow prompts.
+      </Tab>
+      <Tab title="Terminal" icon="terminal">
+````bash
+# SSH into terminal
+ssh admin@your-terminal-ip
+
+# Run update
+sudo wartenmitadana-update
+````
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Restart Services" icon="refresh-cw">
+    Restart the patient call service and verify on the TV display.
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+  Enable auto-updates in your dashboard settings to receive new versions automatically. Back up your patient data before manual updates.
+</Callout>
+
+## Upcoming Features
+
+<Expandable title="Preview: v1.3.0 (Q4 2024)" default-open="false">
+
+- AI-powered estimated wait times displayed on TV screens.
+- Integration with electronic health records (EHR) for seamless check-ins.
+- Mobile app for patients to track their number in real-time.
+
+These features are in beta testing. Join our beta program via the dashboard.
+
+</Expandable>
+
+<Columns cols={2}>
+  <Card title="Feedback" icon="message-circle" href="https://wartenmitadana.de/contact" target="_blank">
+    Suggest features or report issues.
+  </Card>
+  <Card title="Release Notes" icon="book-open" href="/changelog">
+    Full details on all past releases.
+  </Card>
+</Columns>
